@@ -1,0 +1,46 @@
+<html>
+<head>
+<style>
+#resultat {
+  border: 1px solid red
+  
+}
+</style>
+</head>
+<body>
+<p>devine mon nombre</p>
+<input id="entree" type="number"/>
+<button id="boutton" onclick="go()">essai</button>
+<p id="resultat"></p>
+
+
+<script>
+nombresecret = Math.floor(Math.random()*10);
+
+// alert(nombresecret);
+
+function go() {
+  if (entree.value == nombresecret) {
+    resultat.innerText = "bravo"
+    boutton.remove()  
+}
+ if (entree.value < nombresecret) {
+    resultat.innerText = "mon nombre est plus grand"
+  }
+ if (entree.value > nombresecret) {
+    resultat.innerText = "mon nombre est plus petit"
+  }
+
+
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
