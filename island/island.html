@@ -1,0 +1,563 @@
+<html>
+<head>
+<style>
+body > div {
+  border: 1px solid black;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+}
+p {
+  margin-left: 1em;
+}
+#ile {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+#pluie {
+  position: absolute;
+  opacity: 25%;
+  background-image: url("rain.gif");
+  width: 100%;
+  height: 100%;
+}
+#soleil {
+  position: absolute;
+  height: 20%;
+  left: 50%;
+  top: 10%;
+}
+#texte {
+  position: absolute;
+}
+
+#poisson {
+  position: absolute;
+  top: 50%;
+  width: 10%;
+}
+#mer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 60%;
+  background-color: #14a8ff;
+}
+#fil {
+  position: absolute;
+  top: 20%;
+  width: 1px;
+  background-color: black;
+  height: 0px;
+}
+#bouteille {
+  position: absolute;
+  height: 25%;
+  top: 20%;
+  left: -20%;
+}
+#mer2 {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 60%;
+  background-color: #14a8ff;
+}
+#mer3 {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 60%;
+  background-color: #14a8ff;
+}
+#mer3 img {
+  position: absolute;
+}
+#vueMortRequin {
+  color: white;
+  background-color: black;
+}
+#vuePlancheSuccess_img img {
+  width: 5%;
+  margin-top: 10%;
+}
+#vueRadeau img {
+  position: absolute;
+  height: 50%;
+}
+#mer4 {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 60%;
+  background-color: #14a8ff;
+}
+#vueReposer {
+  background-image: url("hammac.svg");
+  background-size: cover;
+  color: #f0f0f0;
+}
+#vueMortDeFaim {
+  background-color: black;
+  color: white;
+}
+#vueMortDeFaim img {
+  height: 45%;
+}
+#vueMortDeSoif img {
+  height: 45%;
+  margin-left: 10%;
+}
+#vueBateau img {
+  height: 45%;
+  margin-left: 10%;
+}
+#vueMortDeFatigue img {
+  height: 45%;
+  margin-left: 10%;
+}
+#vueMortOuragan {
+  background-color: #a0a0a0;
+  color: white;
+  background-image: url("ouragan.svg");
+  background-size: cover;
+}
+</style>
+</head>
+<body>
+<div id="vuePrincipale">
+  <div id="pluie"></div>
+  <img id="soleil" src="soleil.svg">
+  <img id="ile" src="ile.svg">
+
+  <div id="texte">
+    <p>C'est votre <span id="jours"></span>e jour ici.</p>
+    <p>Il <span id="meteo"></span>!</p>
+    <p>Vous avez <span id="eau"></span> litres d'eau.</p>
+    <p>Vous avez <span id="nourriture"></span> jours de nourriture.</p>
+    <p>Vous etes <span id="fatigue"></span>.</p>
+    <p>Vous avez <span id="planches"></span> planches pour votre radeau.</p>
+    <p>
+      <button onClick="island.chercherEau()">chercher de l'eau</button>
+      <button onClick="island.chercherNourriture()">aller a la peche</button>
+      <button onClick="island.envoyerMessage()">envoyer un message</button>
+      <button onClick="island.planche()">chercher une planche</button>
+      <button onClick="island.reposer()">se reposer</button>
+    </p>
+  </div>
+</div>
+
+<div id="vueEau">
+  <p>Bravo, vous avez recupere <span id="quantiteEauLitres"></span> litres d'eau.
+    Cela vous sera utile pour <span id="quantiteEauJours"></span> jours.</p>
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vueNourriture">
+  <p>Entrer un nombre entre 1 et 9:</p>
+  <input id="numeroPeche" type="number"><button onClick="island.peche()">pecher</button>
+  <p id="nourritureResultat"></p>
+  <div>
+    <div id="mer"></div>
+    <img id="poisson" src="poisson.svg">
+    <span id="fil"></span>
+  </div>
+</div>
+
+<div id="vueNourritureGagne">
+  <p>Bravo! Ce poisson pese <span id="poissonPoids"></span> kg!</p>
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vueNourriturePerdu">
+  <p>Le poisson vous a echappe.</p>
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vueEnvoyerMessage">
+  <p>Vous avez envoye un message.</p>
+  <div id="mer2"></div>
+  <img id="bouteille" src="bouteille.svg">
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vueReposer">
+  <p>Vous faites un joli reve:</p>
+  <p id="reve"></p>
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vuePlanche">
+  <p>Il y a <span id="requins"></span> requins dans l'eau.</p>
+  <p>Voulez-vous prendre le risque?</p>
+  <p><button onClick="island.plancheOui()">oui</button> <button onClick="island.plancheNon()">non</button></p>
+  <div id="mer3"></div>
+</div>
+
+<div id="vuePlancheSage">
+  <p>C'est une sage decision.</p>
+  <p><button onClick="island.principale()">continue</button></p>
+</div>
+
+<div id="vuePlancheSuccess">
+  <p>Bravo! Vous avez <span id="vuePlancheSuccess_planches"></span> planches!</p>
+  <p><button onClick="island.principale()">continue</button></p>
+  <div id="vuePlancheSuccess_img"></div>
+</div>
+
+<!-- fin de partie -->
+<div id="vueMortDeFaim">
+  <p>Vous avez oublie de manger :(</p>
+  <p>Vous avez survecu <span id="mortFaimJours"></span> jours.</p>
+  <img src="mortFaim.svg">
+</div>
+
+<div id="vueMortDeSoif">
+  <p>Vous me prenez pour un chameau? Vous avez oublie de boire...</p>
+  <p>Vous avez survecu <span id="mortSoifJours"></span> jours.</p>
+  <img src="chameau.svg">
+</div>
+
+<div id="vueBateau">
+  <p>Vous avez ete souve par le Titanic! Quelle chance, un bateau incoulable...</p>
+  <p>Vous avez survecu <span id="bateauJours"></span> jours.</p>
+  <img src="titanic.svg">
+</div>
+
+<div id="vueMortDeFatigue">
+  <p>Vous avez oublie de dormir :(</p>
+  <p>Vous avez survecu <span id="fatigueJours"></span> jours.</p>
+  <img src="batterie.svg">
+</div>
+
+<div id="vueMortOuragan">
+  <p>Un ouragan a detruit l'ile :(</p>
+  <p>Vous avez survecu <span id="ouraganJours"></span> jours.</p>
+</div>
+
+<div id="vueMortRequin">
+  <p>Aie aie aie, un requin vous a mordu.</p>
+  <p>Vous avez survecu <span id="vueMortRequin_jours"></span> jours.</p>
+  <img src="requin.svg">
+</div>
+
+<div id="vueRadeau">
+  <p>Bravo, votre radeau est termine! Vous n'avez la place que pour vous, j'espere
+  que vous trouverez une autre ile bientot...</p>
+  <p>Vous avez gagne en <span id="vueRadeau_jours"></span> jours.</p>
+  <div id="mer4"></div>
+  <img id="radeau" src="radeau.svg">
+</div>
+
+<script>
+class Island {
+  constructor() {
+    this.jours = 0;
+    this.meteo = 0;
+    this.eau = 18;
+    this.nourriture = 4;
+    this.fatigue = 6;
+    this.planches = 0;
+    this.messages = 0;
+    this.musiqueOk = false;
+  }
+
+  musique() {
+    if (!this.musiqueOk) {
+      this.musiqueOk = true;
+      new Audio("musique.mp3").play();
+    }
+  }
+
+  principale() {
+    this.eau -= 3;
+    if (this.eau < 0) {
+      this.mortDeSoif();
+      return;
+    }
+
+    this.nourriture--;
+    if (this.nourriture == 0) {
+      this.mortDeFaim();
+      return;
+    }
+    this.fatigue--;
+    if (this.fatigue == 0) {
+      this.mortDeFatigue();
+      return;
+    }
+
+    this.meteo = meteoAleatoire();
+    if (this.bateauTrouve()) {
+      this.finBateau();
+      return;
+    }
+    if (this.jours > 30) {
+      if (Math.random() > 1/(this.jours/10-3)) {
+        this.finOuragan();
+        return;
+      }
+    }
+    this.jours++;
+
+    jours.innerText = this.jours;
+    pluie.style.display = "none";
+    soleil.style.display = "none";
+    if (this.meteo == 0) {
+      meteo.innerText = "fait tres chaud";
+      vuePrincipale.style.backgroundColor = "#f5ff00";
+      soleil.style.display = "inherit";
+      soleil.style.height = "25%";
+    }
+    if (this.meteo == 1) {
+      meteo.innerText = "fait chaud";
+      vuePrincipale.style.backgroundColor = "#7dffff";
+      soleil.style.display = "inherit";
+      soleil.style.height = "20%";
+    }
+    if (this.meteo == 2) {
+      meteo.innerText = "pleut";
+      pluie.style.display = "inherit";
+      vuePrincipale.style.backgroundColor = "#a0a0a0";
+    }
+    eau.innerText = this.eau;
+
+    nourriture.innerText = this.nourriture;
+
+    if (this.fatigue == 5) {
+      fatigue.innerText = "en pleine forme";
+    }
+    if (this.fatigue == 4) {
+      fatigue.innerText = "en bonne forme";
+    }
+    if (this.fatigue == 3) {
+      fatigue.innerText = "en forme";
+    }
+    if (this.fatigue == 2) {
+      fatigue.innerText = "fatigue";
+    }
+    if (this.fatigue == 1) {
+      fatigue.innerText = "tres fatigue";
+    }
+    planches.innerText = this.planches;
+
+    show(vuePrincipale);
+  }
+
+  chercherEau() {
+    this.musique();
+    let n = 1;
+    for (let i=0; i<=this.meteo; i++) {
+      n += Math.floor(Math.random() * 10);
+    }
+    this.eau += n;
+    quantiteEauLitres.innerText = n;
+    quantiteEauJours.innerText = Math.ceil(n/3);
+    show(vueEau);
+  }
+
+  chercherNourriture() {
+    this.musique();
+    this.poisson = Math.floor(Math.random() * 9) + 1;
+    poisson.style.left = this.poisson * 10 + "%";
+    poisson.style.transform = "";
+    poisson.style.top = "60%";
+    fil.style.height = 0;
+    show(vueNourriture);
+  }
+
+  peche() {
+    this.musique();
+    fil.style.left = (numeroPeche.value * 10) + "%";
+    this.fil = 0;
+    setTimeout(() => this.pecheMajFil(), 100);
+  }
+
+  pecheMajFil() {
+    if (this.fil < 220) {
+      fil.style.height = (this.fil/220 * 40) + "%";
+      this.fil += 20;
+      setTimeout(() => this.pecheMajFil(), 100);
+      return;
+    }
+    if (numeroPeche.value == this.poisson) {
+      poisson.style.transform = "rotate(90deg)";
+      poisson.style.marginLeft = "-5%";
+      this.pecheMajFin();
+      return;
+    }
+    setTimeout(() => show(vueNourriturePerdu), 1000);
+  }
+
+  pecheMajFin() {
+    if (this.fil > 0) {
+      fil.style.height = (this.fil/220*40) + "%";
+      poisson.style.top = (this.fil/220*40 + 25) + "%";
+
+      this.fil -= 20;
+      setTimeout(() => this.pecheMajFin(), 100);
+      return;
+    }
+    const n = Math.floor(Math.random() * 7) + 1;
+    poissonPoids.innerText = n;
+    this.nourriture += n;
+    show(vueNourritureGagne);
+  }
+
+  envoyerMessage() {
+    this.musique();
+    this.messages++;
+    show(vueEnvoyerMessage);
+    let i = -10;
+    setTimeout(() => deplacerBouteille(), 100);
+    const deplacerBouteille = () => {
+        bouteille.style.left = i + "%";
+        i+=3;
+        if (i<120) {
+          setTimeout(() => deplacerBouteille(), 100);
+        }
+    }
+  }
+
+  reposer() {
+    this.musique();
+    const a = ["Durant les vacances ", "Un doux matin ", "Il fait nuit noire ", "Au crepuscule ", "Un chaud dimanche ", "Un frais vendredi ", "Un jeudi matin ", "L'apres-midi ", "A l'heure du gouter "]
+    const b = ["un lapin russe ", "un kangourou ", "un koala ", "un singe ", "un perroquet ", "un nuage d'abeilles ", "un rhinoceros ", "un cheval blanc ", "un joli cygne "]
+    const c = ["malin ", "sauvage ", "inquiet ", "fier ", "timide "]
+    const d = ["fait du cheval ", "saute sur un pied ", "saute en parachute ", "patine ardemment ", "pilot un planeur ", "va en sous-marin ", "roule en jeep ", "nage le dos-crawle "]
+    const e = ["le long de la plage", "a travers le bois", "a travers le desert", "sur l'ocean", "pres de gros rochers", "en silence sur une montagne", "le long d'un chemin", "a travers la riviere", "pres d'un ruisseau"]
+
+    let r = a[Math.floor(Math.random() * a.length)];
+    r += b[Math.floor(Math.random() * b.length)];
+    r += c[Math.floor(Math.random() * c.length)];
+    r += d[Math.floor(Math.random() * d.length)];
+    r += e[Math.floor(Math.random() * e.length)];
+    r += "...";
+    reve.innerText = r;
+
+    this.fatigue = 6;
+    show(vueReposer, false);
+  }
+
+  planche() {
+    this.musique();    
+    this.requin = Math.floor(Math.random() * 9) + 2;
+    requins.innerText = this.requin;
+    for (let i=0; i<this.requin; i++) {
+      let img = document.createElement("img");
+      img.src = "aileron.svg";
+      img.style.left = (Math.floor(Math.random()*80)+10) + "%";
+      img.style.bottom = (Math.floor(Math.random()*80)+5) + "%";
+      img.style.height = "10%";
+      if (Math.random() > 0.5) {
+        img.style.transform = "scaleX(-1)";
+      }
+      mer3.appendChild(img);
+    }
+    show(vuePlanche);
+  }
+
+  plancheOui() {
+    if (Math.random() > (1.15-this.requin/10)) {
+      vueMortRequin_jours.innerText = this.jours;
+      show(vueMortRequin, false);
+      return;
+    }
+    this.planches++;
+    if (this.planches == 10) {
+      this.finRadeau();
+      return;
+    }
+    vuePlancheSuccess_planches.innerText = this.planches;
+    vuePlancheSuccess_img.replaceChildren();
+    for (let i=0; i<this.planches; i++) {
+      let img = document.createElement("img");
+      img.src = "planche.svg";
+      vuePlancheSuccess_img.appendChild(img);
+    }
+    show(vuePlancheSuccess);
+  }
+
+  plancheNon() {
+    show(vuePlancheSage);
+  }
+
+  // Fin de partie
+  bateauTrouve() {
+    if (this.jours < 3) {
+      return false;
+    }
+    return Math.random() > (1 - this.messages / 100);
+  }
+
+  mortDeFaim() {
+    mortFaimJours.innerText = this.jours;
+    show(vueMortDeFaim, false);
+  }
+
+  mortDeSoif() {
+    mortSoifJours.innerText = this.jours;
+    show(vueMortDeSoif);
+  }
+
+  finBateau() {
+    bateauJours.innerText = this.jours;
+    show(vueBateau);
+  }
+
+  mortDeFatigue() {
+    fatigueJours.innerText = this.jours;
+    show(vueMortDeFatigue);
+  }
+
+  finOuragan() {
+    ouraganJours.innerText = this.jours;
+    show(vueMortOuragan);
+  }
+
+  finRadeau() {
+    vueRadeau_jours.innerText = this.jours;
+    show(vueRadeau);
+    let i = 0;
+    const deplacerRadeau = () => {
+      radeau.style.left = i + "%";
+      radeau.style.bottom = (40-i/5) + "%";
+        i+=1;
+        if (i<120) {
+          setTimeout(() => deplacerRadeau(), 100);
+        }
+    }
+    deplacerRadeau();
+  }
+}
+
+function meteoAleatoire() {
+  return Math.floor(Math.random() * 3);
+}
+
+const island = new Island();
+island.principale();
+
+function show(el, autoCouleur) {
+  const vues = [
+    vuePrincipale, vueEau, vueMortDeFaim, vueMortDeSoif, vueNourriture,
+    vueNourritureGagne, vueNourriturePerdu, vueBateau, vueMortDeFatigue,
+    vueMortOuragan, vueEnvoyerMessage, vueReposer, vuePlanche,
+    vuePlancheSuccess, vueMortRequin, vueRadeau, vuePlancheSage];
+  for (let i=0; i<vues.length; i++) {
+    vues[i].style.display = "none";
+  }
+
+  el.style.display = "inherit";
+  if (autoCouleur !== false) {
+    el.style.backgroundColor = vuePrincipale.style.backgroundColor;
+  }
+}
+
+</script>
+
+</body>
+</html>
