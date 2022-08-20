@@ -446,6 +446,7 @@ class Island {
     this.musique();    
     this.requin = Math.floor(Math.random() * 9) + 2;
     requins.innerText = this.requin;
+    mer3.replaceChildren();
     for (let i=0; i<this.requin; i++) {
       let img = document.createElement("img");
       img.src = "aileron.svg";
